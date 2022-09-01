@@ -6,7 +6,10 @@ import models.CreateOrderRequest;
 
 import static io.restassured.RestAssured.given;
 
-public class OrderClient {
+public class OrderClient extends RestAssuredClient {
+
+    private final String ORDER_URI = "/api/orders";
+    private final String INGREDIENTS_URI = "/api/ingredients";
 
     @Step("Create order")
     public Response createOrder(String token, CreateOrderRequest createOrderRequest) {
@@ -16,7 +19,7 @@ public class OrderClient {
                 .header("Authorization", token)
                 .body(createOrderRequest)
                 .when()
-                .post("/api/orders");
+                .post(ORDER_URI);
     }
 
     @Step("Create order without authorization")
@@ -26,7 +29,7 @@ public class OrderClient {
                 .and()
                 .body(createOrderRequest)
                 .when()
-                .post("/api/orders");
+                .post(ORDER_URI);
     }
 
     @Step("Get ingredients")
@@ -35,7 +38,7 @@ public class OrderClient {
                 .header("Content-type", "application/json")
                 .and()
                 .when()
-                .get("/api/ingredients");
+                .get(INGREDIENTS_URI);
     }
 
     @Step("Get orders")
@@ -45,7 +48,6 @@ public class OrderClient {
                 .and()
                 .header("Authorization", token)
                 .when()
-                .get("/api/orders");
+                .get(ORDER_URI);
     }
-
 }

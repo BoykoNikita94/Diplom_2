@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class Order {
 
-    String[] ingredients;
-    String _id;
-    String status;
-    int number;
-    Date createdAt;
-    Date updatedAt;
+    private String[] ingredients;
+    private String _id;
+    private String status;
+    private int number;
+    private Date createdAt;
+    private Date updatedAt;
 
     public Order(String[] ingredients, String _id, String status, int number, Date createdAt, Date updatedAt) {
         this.ingredients = ingredients;

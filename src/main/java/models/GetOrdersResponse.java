@@ -2,10 +2,10 @@ package models;
 
 public class GetOrdersResponse {
 
-    boolean success;
-    Order[] orders;
-    int total;
-    int totalToday;
+    public boolean success; //(наугад)
+    public Order[] orders;
+    public int total;
+    public int totalToday;
 
     public GetOrdersResponse(boolean success, Order[] orders, int total, int totalToday) {
         this.success = success;

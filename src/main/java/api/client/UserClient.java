@@ -8,7 +8,12 @@ import models.UserLoginRequest;
 
 import static io.restassured.RestAssured.given;
 
-public class UserClient {
+public class UserClient extends RestAssuredClient {
+
+    private final String REGISTER_URI = "/api/auth/register";
+    private final String LOGIN_URI = "/api/auth/login";
+    private final String USER_URI = "/api/auth/user";
+
     @Step("Create user")
     public Response createUser(CreateUserRequest createUserRequest) {
         return given()
@@ -16,7 +21,7 @@ public class UserClient {
                 .and()
                 .body(createUserRequest)
                 .when()
-                .post("/api/auth/register");
+                .post(REGISTER_URI);
     }
 
     @Step("User login")
@@ -25,7 +30,7 @@ public class UserClient {
                 .header("Content-type", "application/json")
                 .and()
                 .body(userLoginRequest)
-                .post("/api/auth/login");
+                .post(LOGIN_URI);
     }
 
     @Step("Changing user data")
@@ -36,7 +41,7 @@ public class UserClient {
                 .header("Authorization", token)
                 .body(changingUserDataRequest)
                 .when()
-                .patch("/api/auth/user");
+                .patch(USER_URI);
     }
 
     @Step("Changing user data without authorization")
@@ -46,7 +51,7 @@ public class UserClient {
                 .and()
                 .body(changingUserDataRequest)
                 .when()
-                .patch("/api/auth/user");
+                .patch(USER_URI);
     }
 
     @Step("Delete user")
@@ -56,8 +61,7 @@ public class UserClient {
                 .and()
                 .header("Authorization", token)
                 .when()
-                .delete("/api/auth/user")
+                .delete(USER_URI)
                 .then().statusCode(202);
-
     }
 }
