@@ -14,8 +14,6 @@ public class OrderClient extends RestAssuredClient {
     @Step("Create order")
     public Response createOrder(String token, CreateOrderRequest createOrderRequest) {
         return given()
-                .header("Content-type", "application/json")
-                .and()
                 .header("Authorization", token)
                 .body(createOrderRequest)
                 .when()
@@ -25,8 +23,6 @@ public class OrderClient extends RestAssuredClient {
     @Step("Create order without authorization")
     public Response createOrderWithoutAuthorization(CreateOrderRequest createOrderRequest) {
         return given()
-                .header("Content-type", "application/json")
-                .and()
                 .body(createOrderRequest)
                 .when()
                 .post(ORDER_URI);
@@ -35,8 +31,6 @@ public class OrderClient extends RestAssuredClient {
     @Step("Get ingredients")
     public Response ingredients() {
         return given()
-                .header("Content-type", "application/json")
-                .and()
                 .when()
                 .get(INGREDIENTS_URI);
     }
@@ -44,10 +38,16 @@ public class OrderClient extends RestAssuredClient {
     @Step("Get orders")
     public Response orders(String token) {
         return given()
-                .header("Content-type", "application/json")
-                .and()
                 .header("Authorization", token)
                 .when()
                 .get(ORDER_URI);
     }
+
+    @Step("Get orders without authorization")
+    public Response getOrderWithoutAuthorization() {
+        return given()
+                .when()
+                .get(ORDER_URI);
+    }
+
 }

@@ -131,8 +131,8 @@ public class ChangingUserDataTests {
     }
 
     @Test
-    @DisplayName("Check error changing data unauthorized user")
-    public void testErrorChangingUnauthorizedUserData() {
+    @DisplayName("Check error changing email with unauthorized user")
+    public void testErrorChangingEmailWithUnauthorizedUser() {
         CreateUserRequest createUserRequest = CreateUserRequest.createRandom();
         String token = userClient.createUser(createUserRequest)
                 .then().statusCode(200)
@@ -147,17 +147,39 @@ public class ChangingUserDataTests {
                 .body("success", equalTo(false))
                 .body("message", equalTo("You should be authorised"))
                 .log().all();
+    }
+
+    @Test
+    @DisplayName("Check error changing password with unauthorized user")
+    public void testErrorChangingPasswordWithUnauthorizedUser() {
+        CreateUserRequest createUserRequest = CreateUserRequest.createRandom();
+        String token = userClient.createUser(createUserRequest)
+                .then().statusCode(200)
+                .body("success", equalTo(true))
+                .log().all().extract().body().path("accessToken");
+        tokens.add(token);
 
         String password = RandomStringUtils.randomAlphanumeric(8);
-        changingUserDataRequest = new ChangingUserDataRequest(null, password, null);
+        ChangingUserDataRequest changingUserDataRequest = new ChangingUserDataRequest(null, password, null);
         userClient.changingUserDataWithoutAuthorization(changingUserDataRequest)
                 .then().statusCode(401)
                 .body("success", equalTo(false))
                 .body("message", equalTo("You should be authorised"))
                 .log().all();
+    }
+
+    @Test
+    @DisplayName("Check error changing name with unauthorized user")
+    public void testErrorChangingNameWithUnauthorizedUser() {
+        CreateUserRequest createUserRequest = CreateUserRequest.createRandom();
+        String token = userClient.createUser(createUserRequest)
+                .then().statusCode(200)
+                .body("success", equalTo(true))
+                .log().all().extract().body().path("accessToken");
+        tokens.add(token);
 
         String name = RandomStringUtils.randomAlphanumeric(8);
-        changingUserDataRequest = new ChangingUserDataRequest(null, null, name);
+        ChangingUserDataRequest changingUserDataRequest = new ChangingUserDataRequest(null, null, name);
         userClient.changingUserDataWithoutAuthorization(changingUserDataRequest)
                 .then().statusCode(401)
                 .body("success", equalTo(false))

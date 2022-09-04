@@ -17,8 +17,6 @@ public class UserClient extends RestAssuredClient {
     @Step("Create user")
     public Response createUser(CreateUserRequest createUserRequest) {
         return given()
-                .header("Content-type", "application/json")
-                .and()
                 .body(createUserRequest)
                 .when()
                 .post(REGISTER_URI);
@@ -27,8 +25,6 @@ public class UserClient extends RestAssuredClient {
     @Step("User login")
     public Response userLogin(UserLoginRequest userLoginRequest) {
         return given()
-                .header("Content-type", "application/json")
-                .and()
                 .body(userLoginRequest)
                 .post(LOGIN_URI);
     }
@@ -36,8 +32,6 @@ public class UserClient extends RestAssuredClient {
     @Step("Changing user data")
     public Response changingUserData(String token, ChangingUserDataRequest changingUserDataRequest) {
         return given()
-                .header("Content-type", "application/json")
-                .and()
                 .header("Authorization", token)
                 .body(changingUserDataRequest)
                 .when()
@@ -47,8 +41,6 @@ public class UserClient extends RestAssuredClient {
     @Step("Changing user data without authorization")
     public Response changingUserDataWithoutAuthorization(ChangingUserDataRequest changingUserDataRequest) {
         return given()
-                .header("Content-type", "application/json")
-                .and()
                 .body(changingUserDataRequest)
                 .when()
                 .patch(USER_URI);
@@ -57,8 +49,6 @@ public class UserClient extends RestAssuredClient {
     @Step("Delete user")
     public void deleteUser(String token) {
         given()
-                .header("Content-type", "application/json")
-                .and()
                 .header("Authorization", token)
                 .when()
                 .delete(USER_URI)

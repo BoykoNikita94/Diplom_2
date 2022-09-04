@@ -2,7 +2,7 @@ package models;
 
 public class CreateOrderRequest {
 
-    public String[] ingredients;
+    private String[] ingredients;
 
     public CreateOrderRequest(String[] ingridients) {
         this.ingredients = ingridients;

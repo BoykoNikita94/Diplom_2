@@ -12,7 +12,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
@@ -61,11 +60,7 @@ public class GetOrdersTests {
     @Test
     @DisplayName("Error getting orders with unauthorized user")
     public void testErrorGettingOrdersWithUnauthorizedUserSuccess() {
-        given()
-                .header("Content-type", "application/json")
-                .and()
-                .when()
-                .get("/api/orders")
+        orderClient.getOrderWithoutAuthorization()
                 .then().statusCode(401)
                 .body("success", equalTo(false))
                 .body("message", equalTo("You should be authorised"));

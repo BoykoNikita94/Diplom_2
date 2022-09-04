@@ -11,7 +11,7 @@ public class RestAssuredClient {
     public RestAssuredClient() {
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setBaseUri(BASE_URI)
-                .setContentType(ContentType.ANY)
+                .setContentType(ContentType.JSON)
                 .build();
     }
 }
